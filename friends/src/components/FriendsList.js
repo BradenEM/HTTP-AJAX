@@ -51,12 +51,28 @@ class FriendsList extends React.Component {
     });
   };
 
+  handleDelete = e => {
+    e.preventDefault();
+    console.log(e.target.value);
+    axios
+      .delete(`http://localhost:5000/friends/${e.target.value}`)
+      .then(response => {
+        this.setState({ friends: response.data });
+        console.log(this.state.friends);
+      });
+  };
+
   render() {
     return (
       <div>
         <div>
           {this.state.friends.map(friend => (
-            <h2 key={friend.id}>{friend.name}</h2>
+            <div>
+              <h2 key={friend.id}>{friend.name}</h2>
+              <button value={friend.id} onClick={this.handleDelete}>
+                X
+              </button>
+            </div>
           ))}
         </div>
         <div>
