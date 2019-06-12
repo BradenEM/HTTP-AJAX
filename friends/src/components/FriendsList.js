@@ -5,7 +5,10 @@ class FriendsList extends React.Component {
   constructor() {
     super();
     this.state = {
-      friends: []
+      friends: [],
+      name: "",
+      age: 0,
+      email: ""
     };
   }
 
@@ -18,20 +21,63 @@ class FriendsList extends React.Component {
       });
   }
 
+  handleNameChange = e => {
+    e.preventDefault();
+    this.setState({ name: e.target.value });
+  };
+
+  handleAgeChange = e => {
+    e.preventDefault();
+    this.setState({ age: parseInt(e.target.value) });
+  };
+
+  handleEmailChange = e => {
+    e.preventDefault();
+    this.setState({ email: e.target.value });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+
+    const newFriend = {
+      name: this.state.name,
+      age: this.state.age,
+      email: this.state.email
+    };
+
+    axios.post("http://localhost:5000/friends", newFriend).then(response => {
+      this.setState({ friends: response.data });
+      console.log(response.data);
+    });
+  };
+
   render() {
     return (
       <div>
         <div>
           {this.state.friends.map(friend => (
-            <h2>{friend.name}</h2>
+            <h2 key={friend.id}>{friend.name}</h2>
           ))}
         </div>
         <div>
-          <form>
+          <form onSubmit={this.handleSubmit}>
             <h2>Add new friend</h2>
-            <input typ="text" placeholder="name" />
-            <input typ="number" placeholder="age" />
-            <input typ="text" placeholder="email" />
+            <input
+              type="text"
+              placeholder="name"
+              onChange={this.handleNameChange}
+            />
+            <input
+              type="number"
+              placeholder="age"
+              onChange={this.handleAgeChange}
+            />
+            <input
+              type="text"
+              placeholder="email"
+              onChange={this.handleEmailChange}
+            />
+            <button type="submit">Add</button>
           </form>
         </div>
       </div>
