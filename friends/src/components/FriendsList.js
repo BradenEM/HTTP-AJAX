@@ -26,16 +26,6 @@ class FriendsList extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleAgeChange = e => {
-    e.preventDefault();
-    this.setState({ age: parseInt(e.target.value) });
-  };
-
-  handleEmailChange = e => {
-    e.preventDefault();
-    this.setState({ email: e.target.value });
-  };
-
   handleSubmit = e => {
     e.preventDefault();
     console.log(this.state);
@@ -71,7 +61,6 @@ class FriendsList extends React.Component {
   render() {
     return (
       <div>
-        <h1>Friends List</h1>
         <div>
           {this.state.friends.map(friend => (
             <div>
@@ -81,33 +70,6 @@ class FriendsList extends React.Component {
               </button>
             </div>
           ))}
-        </div>
-        <div>
-          <form onSubmit={this.handleSubmit}>
-            <h2>Add new friend</h2>
-            <input
-              type="text"
-              placeholder="name"
-              name="name"
-              onChange={this.handleChange}
-              value={this.state.name}
-            />
-            <input
-              type="number"
-              placeholder="age"
-              name="age"
-              onChange={this.handleChange}
-              value={this.state.age}
-            />
-            <input
-              type="text"
-              placeholder="email"
-              name="email"
-              onChange={this.handleChange}
-              value={this.state.email}
-            />
-            <button type="submit">Add</button>
-          </form>
         </div>
       </div>
     );
