@@ -7,7 +7,7 @@ class FriendsList extends React.Component {
     this.state = {
       friends: [],
       name: "",
-      age: 0,
+      age: "",
       email: ""
     };
   }
@@ -21,9 +21,9 @@ class FriendsList extends React.Component {
       });
   }
 
-  handleNameChange = e => {
-    e.preventDefault();
-    this.setState({ name: e.target.value });
+  handleChange = e => {
+    e.persist();
+    this.setState({ [e.target.name]: e.target.value });
   };
 
   handleAgeChange = e => {
@@ -38,6 +38,7 @@ class FriendsList extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
+    console.log(this.state);
 
     const newFriend = {
       name: this.state.name,
@@ -48,6 +49,11 @@ class FriendsList extends React.Component {
     axios.post("http://localhost:5000/friends", newFriend).then(response => {
       this.setState({ friends: response.data });
       console.log(response.data);
+    });
+    this.setState({
+      name: "",
+      age: "",
+      email: ""
     });
   };
 
@@ -65,6 +71,7 @@ class FriendsList extends React.Component {
   render() {
     return (
       <div>
+        <h1>Friends List</h1>
         <div>
           {this.state.friends.map(friend => (
             <div>
@@ -81,17 +88,23 @@ class FriendsList extends React.Component {
             <input
               type="text"
               placeholder="name"
-              onChange={this.handleNameChange}
+              name="name"
+              onChange={this.handleChange}
+              value={this.state.name}
             />
             <input
               type="number"
               placeholder="age"
-              onChange={this.handleAgeChange}
+              name="age"
+              onChange={this.handleChange}
+              value={this.state.age}
             />
             <input
               type="text"
               placeholder="email"
-              onChange={this.handleEmailChange}
+              name="email"
+              onChange={this.handleChange}
+              value={this.state.email}
             />
             <button type="submit">Add</button>
           </form>
