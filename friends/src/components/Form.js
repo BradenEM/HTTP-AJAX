@@ -3,7 +3,7 @@ import React from "react";
 function Form(props) {
   console.log(props);
   return (
-    <div>
+    <div className="friend-form">
       <form onSubmit={props.handleSubmit}>
         <h2>Add new friend</h2>
         <input
